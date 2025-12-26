@@ -3,6 +3,7 @@ package com.codingsrv2.LearningRESTAPIs.controller;
 import com.codingsrv2.LearningRESTAPIs.dto.EmployeeDTO;
 import com.codingsrv2.LearningRESTAPIs.entity.EmployeeEntity;
 import com.codingsrv2.LearningRESTAPIs.repository.EmployeeRepository;
+import com.codingsrv2.LearningRESTAPIs.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,35 +12,29 @@ import java.util.List;
 @RequestMapping("/srv")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-
-    @GetMapping("/user/{employeeId}")
-    public EmployeeEntity getEmployeeById2(@PathVariable int employeeId){
-        return employeeRepository.findById(employeeId).orElse(null);
+    @GetMapping("/{employeeId}")
+    public EmployeeDTO getEmployeeById(@PathVariable int employeeId){
+        return employeeService.getEmployeeById(employeeId);
     }
 
-
-    @GetMapping("/user1")
-    public List<EmployeeEntity> getEmployee(@RequestParam(required = false) int age, @RequestParam(required = false)
-    int id){
-        return employeeRepository.findAll();
-    }
 
     @GetMapping
-    public List<EmployeeEntity> getAllEmployee(){
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getEmployee(@RequestParam(required = false) Integer age, @RequestParam(required = false)
+    Integer id){
+        return employeeService.getEmployee();
     }
 
 
 
     @PostMapping
-    public EmployeeEntity createNewEmployee(@RequestBody EmployeeEntity inputEmployee){
-        return employeeRepository.save(inputEmployee);
+    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO inputEmployee){
+        return employeeService.createNewEmployee(inputEmployee);
     }
 }
 

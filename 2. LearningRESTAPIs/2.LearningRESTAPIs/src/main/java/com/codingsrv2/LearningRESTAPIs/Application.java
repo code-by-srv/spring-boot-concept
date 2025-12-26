@@ -13,7 +13,3 @@ public class Application {
 }
 
 
-/*
- We have added various dependencies like Spring Web, Lombok, Spring Data JPA and H2 Database
- We are saving our database in a folder.
- */
