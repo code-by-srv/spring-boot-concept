@@ -20,6 +20,8 @@ public class EmployeeEntity {
     private Integer age;
     private String email;
     private Boolean isActive;
+    private String role;
+
 
 
 }

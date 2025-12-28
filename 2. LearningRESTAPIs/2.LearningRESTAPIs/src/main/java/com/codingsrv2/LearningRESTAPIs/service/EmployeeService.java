@@ -60,15 +60,15 @@ public class EmployeeService {
         return true;
     }
 
-    public EmployeeDTO updatePartialByEmployeeId(Integer employeeId, Map<String, Object> updates) {
-        boolean exist = isExistByEmployeeId(employeeId);
-        if (!exist) return null;
-        EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).get();
-        updates.forEach((field, value) -> {
-            Field fieldToBeUpdated = ReflectionUtils.findRequiredField(EmployeeEntity.class, field);
-            fieldToBeUpdated.setAccessible(true);
-            ReflectionUtils.setField(fieldToBeUpdated, employeeEntity, value);
-        });
-        return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
-    }
+//    public EmployeeDTO updatePartialByEmployeeId(Integer employeeId, Map<String, Object> updates) {
+//        boolean exist = isExistByEmployeeId(employeeId);
+//        if (!exist) return null;
+//        EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).get();
+//        updates.forEach((field, value) -> {
+//            Field fieldToBeUpdated = ReflectionUtils.findRequiredField(EmployeeEntity.class, field);
+//            fieldToBeUpdated.setAccessible(true);
+//            ReflectionUtils.setField(fieldToBeUpdated, employeeEntity, value);
+//        });
+//        return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
+//    }
 }

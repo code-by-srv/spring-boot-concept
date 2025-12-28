@@ -4,6 +4,7 @@ import com.codingsrv2.LearningRESTAPIs.dto.EmployeeDTO;
 import com.codingsrv2.LearningRESTAPIs.entity.EmployeeEntity;
 import com.codingsrv2.LearningRESTAPIs.repository.EmployeeRepository;
 import com.codingsrv2.LearningRESTAPIs.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public EmployeeDTO createNewEmployee(@RequestBody EmployeeDTO inputEmployee){
+    public EmployeeDTO createNewEmployee(@Valid @RequestBody EmployeeDTO inputEmployee){
         return employeeService.createNewEmployee(inputEmployee);
     }
 
@@ -47,11 +48,11 @@ public class EmployeeController {
         return employeeService.deleteEmployeeById(employeeId);
     }
 
-    @PatchMapping("/{employeeId}")
-    public EmployeeDTO updatePartialByEmployeeId(@PathVariable Integer employeeId,
-                                                 @RequestBody Map<String, Object> updates){
-        return employeeService.updatePartialByEmployeeId(employeeId,updates);
-    }
+//    @PatchMapping("/{employeeId}")
+//    public EmployeeDTO updatePartialByEmployeeId(@PathVariable Integer employeeId,
+//                                                 @RequestBody Map<String, Object> updates){
+//        return employeeService.updatePartialByEmployeeId(employeeId,updates);
+//    }
 }
 
 

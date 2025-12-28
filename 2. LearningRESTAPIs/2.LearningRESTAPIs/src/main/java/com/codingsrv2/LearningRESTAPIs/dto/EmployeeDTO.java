@@ -1,25 +1,40 @@
 package com.codingsrv2.LearningRESTAPIs.dto;
 
+import com.codingsrv2.LearningRESTAPIs.annotations.EmployeeRoleValidation;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
+
 public class EmployeeDTO {
 
 
-
+    @Size(min = 3,max = 7)
     private String name;
+
+    @NotNull(message = "Age should be not null")
     private Integer age;
+
+    @NotBlank(message = "Email should be not blank")
+    @Email(message = "Email should be valid")
     private String email;
+
     private Boolean isActive;
     private Integer id;
-
-
+   // @Pattern(regexp = "^(Admin|User)$", message = "Employee can be either Admin or User")
+    @EmployeeRoleValidation
+    private String role;
+    private LocalDate dateOfJoining;
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String name, int id, int age, String email, Boolean isActive) {
-        this.name = name;
+    public EmployeeDTO(Integer id, String name, Integer age, String email, Boolean isActive, String role, LocalDate dateOfJoining) {
         this.id = id;
+        this.name = name;
         this.age = age;
         this.email = email;
         this.isActive = isActive;
+        this.role = role;
+        this.dateOfJoining = dateOfJoining;
     }
 
     public String getName() {
@@ -60,6 +75,22 @@ public class EmployeeDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public LocalDate getDateOfJoining() {
+        return dateOfJoining;
+    }
+
+    public void setDateOfJoining(LocalDate dateOfJoining) {
+        this.dateOfJoining = dateOfJoining;
     }
 }
 
