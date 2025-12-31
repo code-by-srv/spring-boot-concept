@@ -7,23 +7,14 @@ import java.time.LocalDate;
 
 public class EmployeeDTO {
 
-
-    @Size(min = 3,max = 7)
     private String name;
-
-    @NotNull(message = "Age should be not null")
     private Integer age;
-
-    @NotBlank(message = "Email should be not blank")
-    @Email(message = "Email should be valid")
     private String email;
-
     private Boolean isActive;
     private Integer id;
-   // @Pattern(regexp = "^(Admin|User)$", message = "Employee can be either Admin or User")
-    @EmployeeRoleValidation
     private String role;
     private LocalDate dateOfJoining;
+
     public EmployeeDTO() {
     }
 

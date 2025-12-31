@@ -2,13 +2,18 @@ package com.codingsrv2.LearningRESTAPIs.controller;
 
 import com.codingsrv2.LearningRESTAPIs.dto.EmployeeDTO;
 import com.codingsrv2.LearningRESTAPIs.entity.EmployeeEntity;
+import com.codingsrv2.LearningRESTAPIs.exceptions.ResourceNotFoundException;
 import com.codingsrv2.LearningRESTAPIs.repository.EmployeeRepository;
 import com.codingsrv2.LearningRESTAPIs.service.EmployeeService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/srv")
@@ -21,8 +26,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public EmployeeDTO getEmployeeById(@PathVariable int employeeId){
-        return employeeService.getEmployeeById(employeeId);
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable int employeeId){
+        Optional<EmployeeDTO> employeeDTO = Optional.ofNullable(employeeService.getEmployeeById(employeeId));
+
+        return employeeDTO
+                .map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+
     }
 
 
@@ -53,6 +63,7 @@ public class EmployeeController {
 //                                                 @RequestBody Map<String, Object> updates){
 //        return employeeService.updatePartialByEmployeeId(employeeId,updates);
 //    }
+
 }
 
 

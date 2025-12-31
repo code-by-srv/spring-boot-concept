@@ -2,6 +2,7 @@ package com.codingsrv2.LearningRESTAPIs.service;
 
 import com.codingsrv2.LearningRESTAPIs.dto.EmployeeDTO;
 import com.codingsrv2.LearningRESTAPIs.entity.EmployeeEntity;
+import com.codingsrv2.LearningRESTAPIs.exceptions.ResourceNotFoundException;
 import com.codingsrv2.LearningRESTAPIs.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.util.ReflectionUtils;
@@ -24,7 +25,10 @@ public class EmployeeService {
     }
 
     public EmployeeDTO getEmployeeById(Integer employeeId) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).orElseThrow();
+        EmployeeEntity employeeEntity = employeeRepository
+                .findById(employeeId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Employee not found with id: " + employeeId));
         return modelMapper.map(employeeEntity, EmployeeDTO.class);
     }
 
@@ -59,7 +63,7 @@ public class EmployeeService {
         employeeRepository.deleteById(employeeId);
         return true;
     }
-
+//
 //    public EmployeeDTO updatePartialByEmployeeId(Integer employeeId, Map<String, Object> updates) {
 //        boolean exist = isExistByEmployeeId(employeeId);
 //        if (!exist) return null;
@@ -71,4 +75,5 @@ public class EmployeeService {
 //        });
 //        return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
 //    }
+
 }
