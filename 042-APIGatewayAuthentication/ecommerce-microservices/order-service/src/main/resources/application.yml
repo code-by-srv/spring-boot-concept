@@ -1,0 +1,37 @@
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  retry:
+    instances:
+      inventoryRetry:
+        maxRetryAttempts: 3
+        waitDuration: 100ms
+
+  ratelimiter:
+    instances:
+      inventoryRateLimiter:
+        limitRefreshPeriod: 1s
+        limitForPeriod: 100
+        timeoutDuration: 10ms
+
+  circuitbreaker:
+    instances:
+      inventoryCircuitBreaker:
+          registerHealthIndicator: true   # Exposes Circuit Breaker health details through Spring Boot Actuator.
+          slidingWindowType: COUNT_BASED   # Uses count-based sliding window. Circuit Breaker records a fixed number of recent calls.
+          slidingWindowSize: 10  # Stores the last 10 API call results. (success + failure) for failure rate calculation.
+          minimumNumberOfCalls: 10  # Circuit Breaker starts calculating failure rate. only after at least 10 calls are made.
+          failureRateThreshold: 50   # If 50% of calls fail (5 out of 10),Circuit Breaker changes from CLOSED to OPEN state.
+          waitDurationInOpenState: 20s   # Time Circuit Breaker stays in OPEN state.  During this period all requests are blocked.
+          permittedNumberOfCallsInHalfOpenState: 3  # Number of test requests allowed in HALF_OPEN state. to check whether service is recovered or not.
+          eventConsumerBufferSize: 10  # Buffer size used for storing Circuit Breaker events/logs.
